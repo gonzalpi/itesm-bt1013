@@ -1,0 +1,88 @@
+---
+title: "Ejercicios Básicos de R"
+author: "A01637333@itesm.mx"
+date: "26/3/2021"
+output: html_document
+---
+
+# Ejercicios Básicos de R
+
+2. Calcula estadísticas simples de x. Calcular la media, la desviación estándar y la varianza. Crear un objeto (vector) con el nombre est.x en el que guardar los 3 estadísticos.
+
+```{r}
+x <- c(10, 11, 13, -1, 6, 3)
+media.x <- mean(x)
+ds.x <- sd(x)
+varianza.x <- var(x)
+est.x <- c(media.x, ds.x, varianza.x)
+
+print(paste("La media es: ", est.x[1]))
+print(paste("La desviación estandar es: ", est.x[2]))
+print(paste("La varianza es: ", est.x[3]))
+```
+
+6. Escribe un programa R para encontrar el valor máximo y mínimo de un vector dado.
+
+```{r}
+v <- c(10, 20, 30, 4, 50, -60)
+max.v <- max(v)
+min.v <- min(v)
+
+v
+print(paste("El valor máximo es:", max.v))
+print(paste("El valor mínimo es:", min.v))
+```
+
+7. Escribe una función R para multiplicar dos vectores de tipo entero y longitud n, de la misma longitud ambos.
+
+```{r}
+multiplica <- function(v1, v2) {
+  if (length(v1) == length(v2) &&
+      class(v1) == "numeric" &&
+      class(v2) == "numeric") {
+    len <- length(v1)
+    ans <- vector()
+    for (i in 1:len) {
+      ans <- c(ans, (v1[i] * v2[i]))
+    }
+    return(ans)
+  }
+}
+
+multiplica(c(10, 20), c(3, 4))
+```
+
+8. Escribe una función R para contar el valor específico en un vector dado.
+
+```{r}
+cuenta <- function(v, val) {
+  len <- length(v)
+  count <- 0
+  for (i in 1:len) {
+    if (v[i] == val) {
+      count <- count + 1
+    }
+  }
+  return(count)
+}
+
+cuenta(c(10, 20, 10, 7, 24, 7, 5), 7)
+```
+
+9. Escribe una función en R para extraer cada enésimo elemento de un vector dado.
+
+```{r}
+enesimo <- function(v, val) {
+  len <- length(v)
+  i <- 1
+  ans <- vector()
+  while (i<=len) {
+    ans <- c(ans, v[i])
+    i <- i + val
+  }
+  return(ans)
+}
+
+v <- 1:100
+enesimo(v, 5)
+```
