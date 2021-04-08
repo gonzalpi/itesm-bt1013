@@ -132,3 +132,61 @@ Data frame functions:
 
     name <- function(arguments) {operation}
     add <- function(x, y) {x + y}
+
+#### Apr 6
+
+## Bioelementos
+
+### Macromoléculas
+
+- Monómero: unidad básica (e.g. molécula de glucosa)
+- Doble enlace facilita reacciones
+- Elementos más abundantes: C, H, O, N, P, S
+    - C: base, andamiaje (en teoría también puede servir Si)
+    - P: parte de fostolípidos en membranas celulares, unión de moléculas
+    - S: formacion de aminoácidos (cisteína y metionina)
+- Tipos:
+    - Carbohidratos
+        - Fuente primaria de energía
+        - Tienen C, H, O, en proporción 1:2:1
+    - Lípidos
+        - Insolubles en agua
+        - Sólidos a temperatura ambiente (insaturados son líquidos)
+        - Delimitar, dar estructura al cuerpo
+        - Almacenamiento más rápido para energía
+    - Proteínas
+        - Polímeros de aminoacidos
+        - 50% de peso seco de célula es proteína
+        - Estructura:
+            1. Primaria: secuencia de cadena de aminoácidos
+            2. Secundaria: aminoácidos en secuencia interactúan por enlaces de H
+            3. Terciaria: ciertas atracciones entre hélices alfa y hojas plegadas
+            4. Cuaternaria: proteína que consiste de más de una cadena
+        - Orden de aminoácidos determina estructura tridimensional
+        - Estructura tridimensional determina función
+        - Tipos:
+            - Catalizadores (enzimas)
+            - Transporte (hemoglobina)
+            - Estructurales (colágeno)
+            - Homeostasis (albúmina)
+            - Defensa (anticuerpos)
+            - Hormonas (insulina, hormona de crecimiento)
+            - Locomoción (actina, miosina)
+    - Ácidos nucleicos
+        - Carbonos del azúcar se nombran a qué tan cercanos están de la base
+        - 5' es el último
+        - 3' se une a otra molécula
+        - Sentido de lectura: 5' a 3'
+        - Nucleótidos (monómeros):
+            - Unidos por fosfatos
+            - De azúcar
+            - Con base (adenina A, citosina C, guanina G, timina T (ADN)/uracilo U (ARN))
+        - Desoxiribosa tiene un O menos que la ribosa y es más estable
+        - Interacciones (ADN):
+            - CG (3 enlaces de H)
+            - AT (2 enlaces de H)
+
+> ADN -> ADN
+
+> ADN -> ARN -> Proteína
+
