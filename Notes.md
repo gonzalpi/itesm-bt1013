@@ -1,10 +1,5 @@
----
-output:
-  pdf_document: default
-  html_document: default
----
 <style>
-    body {text-align: justify;}
+    p {text-align: justify;}
     h2 {text-align: center;}
     h4 {text-align: right;}
     table {margin: auto;}
@@ -172,21 +167,54 @@ Data frame functions:
             - Defensa (anticuerpos)
             - Hormonas (insulina, hormona de crecimiento)
             - Locomoción (actina, miosina)
-    - Ácidos nucleicos
-        - Carbonos del azúcar se nombran a qué tan cercanos están de la base
-        - 5' es el último
-        - 3' se une a otra molécula
-        - Sentido de lectura: 5' a 3'
+    - Ácidos nucleicos: compuestos de biomoléculas con pero molecular de 25k a 3M, cadenas de nucleótidos
+        - Tipos:
+            - ADN
+            - ARN
         - Nucleótidos (monómeros):
-            - Unidos por fosfatos
-            - De azúcar
-            - Con base (adenina A, citosina C, guanina G, timina T (ADN)/uracilo U (ARN))
-        - Desoxiribosa tiene un O menos que la ribosa y es más estable
-        - Interacciones (ADN):
-            - CG (3 enlaces de H)
-            - AT (2 enlaces de H)
+            - Azúcar (pentosa): desoxiribosa (tiene un oxígeno menos, es más estable) o ribosa
+            - Unidos por grupo fosfato (-P)
+            - Base nitrogenada
+                - Púrica (derivada de purina): guanina G, adenina A.
+                - Pirimídica (derivada de pirimida): citosina C, timina T, uracilo U.
+
+        ![Image](Notes/acidosNucleicos.png)
 
 > ADN -> ADN
 
 > ADN -> ARN -> Proteína
 
+### ADN
+
+Polímero de nucleótidos. Puede duplicarse antes de la división celular. Dentro de cromosomas están los genes formados por ADN que contiene info. para hacer proteínas.
+- Las cadenas son antiparalelas (una empieza de 5' a 3' y la otra de 3' a 5')
+- Interacciones:
+    - CG (3 enlaces de H)
+    - AT (2 enlaces de H)
+- Estructura:
+    - Primaria: secuencia de nucleótidos (orden y orientación)
+        - Los carbonos se cuentan a partir de la base nitrogenada
+        - Cada cadena tiene extremo 5' porque tiene un grupo fosfato libre unido al carbono 5' del nucleótido. Tiene un extremo 3' porque tiene un OH- en la posición 3' del nucleótido
+        ![Image](Notes/nucleotido.jpeg)
+        - La otra cadena va de 3' a 5'; 5' representa el extremo terminal del fosfato y 3' el estremo final del átomo de carbono del azúcar (se une a otra molécula).
+        ![Image](Notes/desoxirribosa.jpeg)
+        - Sentido de lectura: 5' a 3'
+    - Secundaria: doble hélice antiparalela con bases nitrogenadas unidas por puentes de hidrógeno otorgando estabilidad
+    - Terciaria: empaquetamiento del ADN, cromatina (forma compacta)
+        - Niveles:
+            - Nucleosoma: circulos de proteína
+            - Collar de perlas: donde nucleosomas aparecen enrollados
+            - Fibras cromatínicas: donde el collar se enrolla en sí formando un solenoide
+            - Bucles radiales: durante interfase de ciclo celular, compactación hasta formar cromosomas
+
+### ARN
+
+Cadena que puede enrollarse en sí misma hasta formar hélice de una sola cadena. Copia ADN para producir proteínas, une aminoácidos en orden correcto, forma ribosomas.
+- Estructura primaria: igual que ADN pero de menor tamaño
+- Tipos:
+    - Mensajero (ARNm): copia info. genétida de ADN
+    - De transferencia (ARNt): une los 20 aminoácidos en la síntesis de proteínas (los transporta del citoplasma al ribosoma)
+    - Ribosomal (ARNr): forma ribosomas con proteínas
+- Interacciones:
+    - CG (3 enlaces de H)
+    - AU
