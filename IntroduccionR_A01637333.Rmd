@@ -1,0 +1,55 @@
+---
+title: "Ejercicios en R"
+author: "Alejandro Rodriguez, Ian Garcia, Said Ortigoza"
+date: "4/11/2021"
+output: html_document
+---
+
+# Ejercicios en R
+
+1. Escribe una función que genere una secuencia aleatoria de DNA de tamaño “n” (número de nucleótidos).  Guarda  la  secuencia  en  una  variable  y  úsala  para  probar  los  siguientes ejercicios.
+```{r}
+randomDNA <- function(n) {
+  if (n %% 3 == 0) {
+    base <- c("C", "G", "A", "T")
+    seq <- character()
+    for (i in 1:n) {
+      seq <- paste(seq, base[sample(1:4, 1)], sep="")
+    }
+    return(seq)
+  } else {
+    print("Error: La longitud de la cadena debe ser un multiplo de 3.")
+    return(NULL)
+  }
+}
+```
+
+2. Codifica una función que calcula el tamaño de una secuencia de DNA.
+```{r}
+sizeDNA <- function(seq) {
+  return(nchar(seq, type="chars"))
+}
+```
+
+3. Crea una función que recibe una secuencia de DNA e imprime el porcentaje de cada base en la secuencia.
+```{r}
+baseRatio <- function(seq) {
+  sz <- sizeDNA(seq)
+  ratio <- numeric(4)
+  seq <- gsub("C", "1", seq)
+  seq <- gsub("G", "2", seq)
+  seq <- gsub("A", "3", seq)
+  seq <- gsub("T", "4", seq)
+  seq <- strsplit(seq, split="")
+  for (i in 1:sz) {
+    ratio[as.numeric(seq[[1]][i])] <- ratio[as.numeric(seq[[1]][i])] + 1
+  }
+  ratio <- (1/100) * trunc((10000/sz) * ratio)
+  print("Porcentaje de bases")
+  print(paste("C = ", ratio[1], "%", sep=""))
+  print(paste("G = ", ratio[2], "%", sep=""))
+  print(paste("A = ", ratio[3], "%", sep=""))
+  print(paste("T = ", ratio[4], "%", sep=""))
+}
+```
+
