@@ -180,10 +180,6 @@ Data frame functions:
 
         ![Image](Notes/acidosNucleicos.png)
 
-> ADN -> ADN
-
-> ADN -> ARN -> Proteína
-
 ### ADN
 
 Polímero de nucleótidos. Puede duplicarse antes de la división celular. Dentro de cromosomas están los genes formados por ADN que contiene info. para hacer proteínas.
@@ -218,3 +214,30 @@ Cadena que puede enrollarse en sí misma hasta formar hélice de una sola cadena
 - Interacciones:
     - CG (3 enlaces de H)
     - AU
+
+### Dogma central de la biología molecular
+
+    Replicación:    ADN -> ADN
+    Transcripción:  ADN -> ARN
+    Traducción:     ARN -> Proteína
+
+ARNm copia información de ADN, la saca del núcleo y la lleva a los ribosomas. ARNt transporta información para sintetizar proteínas.
+
+Gen: región de ADN que codifica para una función en específico (e.g. color de ojos)
+
+ARNm, traducción: codones de 3 nucleótidos (4 posibles estados c/u) -> 64 combinaciones =  64 proteínas
+- Estructura:
+    - Cap
+    - 5' UTR (untranslated region)
+    - CDS (coding sequence from start to stop)
+    - 3' UTR (untranslated region)
+    - Poly-A tail
+- Pre-ARNm
+    - Exon: región que da información (que se pasa a CDS en ARNm)
+    - Intron: región que NO da información (no se pasa a CDS)
+
+ARN está basado en cadena complementaria de cadena ADN
+
+Marco de lectura:
+- AUG/ATG es el inicio (en bases de datos nunca hay U) para ARN
+- TAC es el inicio para ADN (complementario de ATG)
