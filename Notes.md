@@ -241,3 +241,72 @@ ARN está basado en cadena complementaria de cadena ADN
 Marco de lectura:
 - AUG/ATG es el inicio (en bases de datos nunca hay U) para ARN
 - TAC es el inicio para ADN (complementario de ATG)
+
+#### April 13
+
+## Databases
+
+Genes (NCBI):
+- Standardized names provided by HGNC (HUGO Gene Nomenclature Committee)
+- RefSeq status: REVIEWED means it exists and its functions have been proven
+- Gene location: 11p15.5
+    - 11th largest chromosome
+    - p bras pour petit (ou q pour le grand)
+    - 15th band across arm
+    - 5th sub band
+- Exon count: número de regiones que sí se codifican
+- FASTA: sequence in nucleotides
+- GenBank: sequence in aminoacids
+
+#### April 16
+
+## Virus
+
+Parásitos moleculares
+
+![Image](Notes/genomasVirales.png)
+
+Prebiótico: alimento para probiótico (e.g. yogurt, kombucha)
+
+Probiótico: alimentos con microorganismos para fortalecer bacterias benéficas del cuerpo (e.g. Yakult)
+
+Antibiótico: mata a TODAS las bacterias
+
+Superbug: bacteria que ha sobrevivido a todos los antibióticos
+
+### Virome
+
+![Image](Notes/virome.png)
+
+Colección de virus en el cuerpo humano
+- Virus no benéficos: VIH, papiloma humano, etc.
+- Virus que se quedan en los testículos/ovarios: se heredan
+
+Retrovirus: RNA a DNA, se introduce a genoma
+
+Para introducir DNA: disparar, electrocutar o choque térmico
+
+## SARS-CoV 2
+
+- Familia: coronaviridae
+- Género: coronavirus
+- Genoma: 29 903 letras
+- Proteina Spike: se conecta con el host, parte más importante
+    - Genoma de CoV humano es distinto en la parte del Spike del murciélago y pangolín, y por eso no les afecta como a nosotros
+
+### Coronavirus humanos
+Más comunes:
+- 229E
+- NL63
+- OC43
+- HKU1
+
+Otros más graves:
+- MERS-CoV
+- SARS-CoV
+- SARS-CoV 2 *(covid-19)*
+
+### Plotting in R
+
+    par(mar = c(1,1,1,1)) // to set margins
+    par(mfrow = c(2,2)) // plot grid dimensions
