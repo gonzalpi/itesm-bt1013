@@ -262,3 +262,4 @@ barplot(ratio_s6, main="H1N1-6 nt. ratio", names.arg=c("C", "G", "A", "T", "N"),
 barplot(ratio_s7, main="H1N1-7 nt. ratio", names.arg=c("C", "G", "A", "T", "N"), ylim=c(0,40))
 barplot(ratio_s8, main="H1N1-8 nt. ratio", names.arg=c("C", "G", "A", "T", "N"), ylim=c(0,40))
 ```
+Dado que virus del ZIKA es el que tiene mayor cantidad de nucleótidos G y C, este es el que tiene una estructura más estable. Esto implica que requiere más trabajo para desnaturalizar y poder ser analizado. Las secuencias del DENGUE y del MERS, así como los segmentos del H1N1 tienen una composición de entre 40 y 46% GC, lo que implica que se requiere de menos trabajo de lo normal para desnaturalizar. Finalmente, los virus SARS CoV y SARS CoV 2 (WUHAN) tienen un porcentaje de GC de 37.96%, lo que los vuelve menos estables.
