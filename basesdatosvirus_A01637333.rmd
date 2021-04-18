@@ -1,0 +1,247 @@
+--------------------
+Title         : basesdatosvirus_A01706892
+Project       : BT1013
+Description   : Obtener y visualizar datos de secuencias de ADN de diferentes virus en NCBI, en formato FASTA.
+Author        : Ian García, Said Ortigoza, Alejandro Rodríguez
+Created on    : 17/04/21
+Copyright (c) 2021
+--------------------
+
+Dentro de NCBI busca las secuencias de las siguientes entidades:
+
+- Zika Virus, complete genome
+- SARS Coronavirus, complete genome
+- Wuhan seafood market pneumonia virus isolate Wuhan-Hu-1, complete genome
+- Middle East respiratory syndrome coronavirus, complete genome
+```{r}
+library("seqinr")
+
+zika <- read.fasta('./data/zika.fasta')
+sars <- read.fasta('./data/sarscoronavirus.fasta')
+wuhan <- read.fasta('./data/wuhan.fasta')
+meast <- read.fasta('./data/middleeast.fasta')
+dengue <- read.fasta('./data/dengue.fasta')
+
+zika_sequence <- gsub(" ", "", paste(zika[[1]][1:length(zika[[1]])], collapse = " "))
+sars_sequence <- gsub(" ", "", paste(sars[[1]][1:length(sars[[1]])], collapse = " "))
+wuhan_sequence <- gsub(" ", "", paste(wuhan[[1]][1:length(wuhan[[1]])], collapse = " "))
+meast_sequence <- gsub(" ", "", paste(meast[[1]][1:length(meast[[1]])], collapse = " "))
+dengue_sequence <- gsub(" ", "", paste(dengue[[1]][1:length(dengue[[1]])], collapse = " "))
+```
+Busca las secuencias de H1N1 que apareció en México en 2009 y obtén los segmentos del virus.
+```{r}
+segmento1 <- read.fasta('./data/h1n1/segmento1.fasta')
+segmento2 <- read.fasta('./data/h1n1/segmento2.fasta')
+segmento3 <- read.fasta('./data/h1n1/segmento3.fasta')
+segmento4 <- read.fasta('./data/h1n1/segmento4.fasta')
+segmento5 <- read.fasta('./data/h1n1/segmento5.fasta')
+segmento6 <- read.fasta('./data/h1n1/segmento6.fasta')
+segmento7 <- read.fasta('./data/h1n1/segmento7.fasta')
+segmento8 <- read.fasta('./data/h1n1/segmento8.fasta')
+
+segmento1_sequence <- gsub(" ", "", paste(segmento1[[1]][1:length(segmento1[[1]])], collapse = " "))
+segmento2_sequence <- gsub(" ", "", paste(segmento2[[1]][1:length(segmento2[[1]])], collapse = " "))
+segmento3_sequence <- gsub(" ", "", paste(segmento3[[1]][1:length(segmento3[[1]])], collapse = " "))
+segmento4_sequence <- gsub(" ", "", paste(segmento4[[1]][1:length(segmento4[[1]])], collapse = " "))
+segmento5_sequence <- gsub(" ", "", paste(segmento5[[1]][1:length(segmento5[[1]])], collapse = " "))
+segmento6_sequence <- gsub(" ", "", paste(segmento6[[1]][1:length(segmento6[[1]])], collapse = " "))
+segmento7_sequence <- gsub(" ", "", paste(segmento7[[1]][1:length(segmento7[[1]])], collapse = " "))
+segmento8_sequence <- gsub(" ", "", paste(segmento8[[1]][1:length(segmento8[[1]])], collapse = " "))
+
+
+```
+Funciones
+```{r}
+sizeDNA <- function(seq) {
+  return(nchar(seq, type = "chars"))
+}
+baseRatio <- function(seq) {
+  sz <- sizeDNA(seq)
+  ratio <- numeric(5)
+  seq <- gsub("c", "1", seq)
+  seq <- gsub("g", "2", seq)
+  seq <- gsub("a", "3", seq)
+  seq <- gsub("t", "4", seq)
+  seq <- gsub("n", "5", seq)
+  seq <- gsub("y", "6", seq)
+  seq <- gsub("r", "7", seq)
+  seq <- strsplit(seq, split = "")
+  for (i in 1:sz) {
+    ratio[as.numeric(seq[[1]][i])] <- ratio[as.numeric(seq[[1]][i])] + 1
+  }
+  ratio <- (1 / 100) * trunc((10000 / sz) * ratio)
+  print("Porcentaje de bases")
+  print(paste0("C = ", ratio[1], "%"))
+  print(paste0("G = ", ratio[2], "%"))
+  print(paste0("A = ", ratio[3], "%"))
+  print(paste0("T = ", ratio[4], "%"))
+  print(paste0("N = ", ratio[5], "%"))
+}
+GCpercent <- function(seq) {
+  sz <- sizeDNA(seq)
+  ratio <- numeric(2)
+  seq <- gsub("c", "1", seq)
+  seq <- gsub("g", "2", seq)
+  seq <- gsub("a", "3", seq)
+  seq <- gsub("t", "4", seq)
+  seq <- gsub("n", "5", seq)
+  seq <- gsub("y", "6", seq)
+  seq <- gsub("r", "7", seq)
+  seq <- strsplit(seq, split = "")
+  for (i in 1:sz) {
+    ratio[as.numeric(seq[[1]][i])] <- ratio[as.numeric(seq[[1]][i])] + 1
+  }
+  ratio <- (1 / 100) * trunc((10000 / sz) * ratio)
+  add <- ratio[1] + ratio[2]
+  print(paste0("Porcentaje de GC = ", add, "%"))
+}
+```
+De cada uno debes obtener sus secuencias y responder las siguientes preguntas:
+
+1.- ¿Cuál es el tamaño de cada secuencia?
+```{r}
+print("-----===== VIRUS =====-----")
+print(paste("El tamaño de ZIKA: ", sizeDNA(zika_sequence)))
+print(paste("El tamaño de SARS: ", sizeDNA(sars_sequence)))
+print(paste("El tamaño de WUHAN: ", sizeDNA(wuhan_sequence)))
+print(paste("El tamaño de MIDDLE EAST: ", sizeDNA(meast_sequence)))
+print(paste("El tamaño de DENGUE: ", sizeDNA(dengue_sequence)))
+print("-----=================-----")
+
+print("-----===== H1N1 =====-----")
+print(paste("El tamaño del segmento 1: ", sizeDNA(segmento1_sequence)))
+print(paste("El tamaño del segmento 2: ", sizeDNA(segmento2_sequence)))
+print(paste("El tamaño del segmento 3: ", sizeDNA(segmento3_sequence)))
+print(paste("El tamaño del segmento 4: ", sizeDNA(segmento4_sequence)))
+print(paste("El tamaño del segmento 5: ", sizeDNA(segmento5_sequence)))
+print(paste("El tamaño del segmento 6: ", sizeDNA(segmento6_sequence)))
+print(paste("El tamaño del segmento 7: ", sizeDNA(segmento7_sequence)))
+print(paste("El tamaño del segmento 8: ", sizeDNA(segmento8_sequence)))
+print("-----================-----")
+```
+2.- ¿Cuál es la composición de nucleótidos de cada secuencia?
+```{r}
+print("-----===== VIRUS =====-----")
+print("---- ZIKA ----")
+baseRatio(zika_sequence)
+print("---- SARS ----")
+baseRatio(sars_sequence)
+print("---- WUHAN ----")
+baseRatio(wuhan_sequence)
+print("---- MIDDLE EAST ----")
+baseRatio(meast_sequence)
+print("---- DENGUE ----")
+baseRatio(dengue_sequence)
+print("-----=================-----")
+
+print("-----===== H1N1 =====-----")
+print("---- Segmento 1 ----")
+baseRatio(segmento1_sequence)
+print("---- Segmento 2 ----")
+baseRatio(segmento2_sequence)
+print("---- Segmento 3 ----")
+baseRatio(segmento3_sequence)
+print("---- Segmento 4 ----")
+baseRatio(segmento4_sequence)
+print("---- Segmento 5 ----")
+baseRatio(segmento5_sequence)
+print("---- Segmento 6 ----")
+baseRatio(segmento6_sequence)
+print("---- Segmento 7 ----")
+baseRatio(segmento7_sequence)
+print("---- Segmento 8 ----")
+baseRatio(segmento8_sequence)
+print("-----================-----")
+```
+3.- ¿Cuál es el contenido de GC de cada virus?
+```{r}
+print("-----===== VIRUS =====-----")
+print("---- ZIKA ----")
+GCpercent(zika_sequence)
+print("---- SARS ----")
+GCpercent(sars_sequence)
+print("---- WUHAN ----")
+GCpercent(wuhan_sequence)
+print("---- MIDDLE EAST ----")
+GCpercent(meast_sequence)
+print("---- DENGUE ----")
+GCpercent(dengue_sequence)
+print("-----=================-----")
+
+print("-----===== H1N1 =====-----")
+print("---- Segmento 1 ----")
+GCpercent(segmento1_sequence)
+print("---- Segmento 2 ----")
+GCpercent(segmento2_sequence)
+print("---- Segmento 3 ----")
+GCpercent(segmento3_sequence)
+print("---- Segmento 4 ----")
+GCpercent(segmento4_sequence)
+print("---- Segmento 5 ----")
+GCpercent(segmento5_sequence)
+print("---- Segmento 6 ----")
+GCpercent(segmento6_sequence)
+print("---- Segmento 7 ----")
+GCpercent(segmento7_sequence)
+print("---- Segmento 8 ----")
+GCpercent(segmento8_sequence)
+print("-----================-----")
+```
+
+4.- Crear una función para obtener la secuencia complementaria e imprimirla por cada secuencia.
+```{r}
+getComplementary <- function(seq) {
+  sz <- sizeDNA(seq)
+  complementary <- vector(mode = "character")
+  for (base in strsplit(seq, "")) {
+    for (i in 1:sz) {
+      if (base[i] == "t") {
+        complementary <- append(complementary, "a")
+      } else if (base[i] == "g") {
+        complementary <- append(complementary, "c")
+      } else if (base[i] == "c") {
+        complementary <- append(complementary, "g")
+      } else {
+        complementary <- append(complementary, "t")
+      }
+    }
+  }
+  print(gsub(" ", "", paste0(complementary, collapse = " ")))
+}
+
+print("-----===== VIRUS =====-----")
+print("ZIKA")
+getComplementary(zika_sequence)
+print("SARS")
+getComplementary(sars_sequence)
+print("WUHAN")
+getComplementary(wuhan_sequence)
+print("MIDDLE EAST")
+getComplementary(meast_sequence)
+print("DENGUE")
+getComplementary(dengue_sequence)
+print("-----=================-----")
+
+print("-----===== H1N1 =====-----")
+print("---- Segmento 1 ----")
+getComplementary(segmento1_sequence)
+print("---- Segmento 2 ----")
+getComplementary(segmento2_sequence)
+print("---- Segmento 3 ----")
+getComplementary(segmento3_sequence)
+print("---- Segmento 4 ----")
+getComplementary(segmento4_sequence)
+print("---- Segmento 5 ----")
+getComplementary(segmento5_sequence)
+print("---- Segmento 6 ----")
+getComplementary(segmento6_sequence)
+print("---- Segmento 7 ----")
+getComplementary(segmento7_sequence)
+print("---- Segmento 8 ----")
+getComplementary(segmento8_sequence)
+print("-----================-----")
+```
+5.- Crear una gráfica de resumen para comparar la composición de nucleótidos de las 5 secuencias.
+```{r}
+# TODO: Create graph based on previous data.
+```
