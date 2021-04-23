@@ -1,0 +1,265 @@
+---
+title: 'Evidencia 1: Análisis inicial'
+author: "Luis Alejandro Rodríguez González"
+date: "23 de abril de 2021"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{css, echo=FALSE}
+p {
+  text-align: justify;
+}
+li {
+  font-weight: bold;
+}
+```
+
+# Parte 1
+
+1. Situación actual de covid-19 a nivel mundial, en México y Jalisco.
+
+El covid-19, causado por el virus SARS-CoV-2, fue declarado una pandemia por la Organización Mundial de la Salud el 11 de marzo de 2020 (OMS, 2020b).
+
+De acuerdo con cifras de la Universidad Johns Hopkins (2021), a nivel global se han registrado 144 millones de casos, 3 millones de decesos (2.1% de mortalidad) y 83 millones de recuperaciones. En México se han registrado 2.3 millones de casos (1.8% de incidencia), 210 mil decesos (9.2% de mortalidad) y 1.8 millones de recuperaciones, lo cual coloca al país en el 15° puesto con más positivos y con una de las tasas de mortalidad más altas. En el estado de Jalisco, se han registrado 85 mil casos (1.0% de incidencia) y 12 mil decesos (13.9% de mortalidad). Es importante notar que las altas tasas de mortalidad también tienen como factor la falta de pruebas en el país.
+
+Actualmente, ya se está vacunando a la población mexicana con las 5 vacunas que han sido aprobadas al 23 de abril de 2020: Pfizer-BioNTech que actua mediante ARNm y Oxford-AstraZeneca, Sputnik V y CanSino que actuan mediante vector viral no replicante, y Sinovac que actua mediante virus inactivado (Gobierno de México, 2021). De acuerdo con cifras obtenidas de la Secretaría de Economía por El Economista (2021), al 20 de abril de 2021, ya fueron vacunadas 15 millones de personas y, de seguir al ritmo de este mes, a final de año estará vacunado el 80% de la población.
+
+2. Primera variante
+
+El 31 de diciembre de 2019 la Organización Mundial de la Salud (2020a) recibió informes de casos de neumonía por causas desconocidas en la ciudad china de Wuhan. El 7 de enero de 2020 se identificó que estos eran causados por un virus que fue nombrado 2019-nCoV. Más adelante, este virus sería identificado y nombrado SARS-CoV-2 (*severe acute respiratory syndrome coronavirus 2*). La variante de este virus, antes de las mutaciones que se presentaron con su esparcimiento alrededor del mundo, es la llamada Wuhan-Hu-1, identificada como la variante B según la asignación de filogenética PANGO.
+
+3. Variantes en otras regiones del mundo
+
+El CDC (2021) tiene identificadas 4 variantes como "de interés":
+
+| Variante  | Lugar de detección    | Fecha     |
+| ---       | ---                   | ---       |
+| B.1.526   | Nueva York, EEUU      | Nov. 2020 |
+| B.1.526.1 | Nueva York, EEUU      | Oct. 2020 |
+| B.1.525   | Reino Unido y Nigeria | Dic. 2020 |
+| P.2       | Brasil                | Abr. 2020 |
+
+Y también tiene identificada otras 5 variantes como "de preocupación":
+
+| Variante | Lugar de detección |
+| ---      | ---                |
+| B.1.1.7  | Reino Unido        |
+| P.1      | Japón y Brasil     |
+| B.1.351  | Sudáfrica          |
+| B.1.427  | California, EEUU   |
+| B.1.429  | California, EEUU   |
+
+
+4. Información de la variante del virus en México
+
+En PANGO lineages (2021) se encuentran disponibles los linajes del SARS-CoV-2, así como su distribución por países. Para encontrar información se pueden explorar los listados linajes más importantes (A, B, B.1, B.1.1, B.1.177 y B.1.1.7) y buscar por palabra clave México. Posteriormente, se pueden buscar en la plataforma NCBI Virus filtrando por PANGO para obtener acceso a las secuencias de nucleótidos.
+
+5. Imagina que te encuentras en una situación similar a la de Li Wenliang, médico que intentó alertar sobre el brote de coronavirus, pero fue detenido y obligado a retractarse, ¿qué harías en su caso?
+
+Si yo me encontrara en la situación del doctor Li, reportaría el hallazgo al centro de investigación o a la universidad. Tomo esta decisión porque, si bien, como investigador del sector de salud pública mi deber es priorizar la salud de la población, también es mi deber considerar los riesgos que la comunicación temprana de un hallazgo amenazante puede traer (como el pánico generado por la incertidumbre inicial). De igual manera, debo velar por la privacidad y el bienestar de mi paciente, ya que como médico bajo juramento hipocrático mi prioridad número uno es esa (Buchanan & Miller, 2006). Considero que es posible seguir las líneas institucionales para reportar este tipo de situaciones, siendo consciente de que puedo acudir a miembros superiores de la institución si es que tengo claro que se trata de un descubrimiento importante.
+
+# Parte 2
+
+```{r}
+# Funciones
+sequenceLength <- function(seq) {
+  return(nchar(seq, type="chars"))
+}
+
+baseRatio <- function(seq) {
+  sz <- sequenceLength(seq)
+  ratio <- numeric(4)
+  seq <- gsub("c", "1", seq)
+  seq <- gsub("g", "2", seq)
+  seq <- gsub("a", "3", seq)
+  seq <- gsub("t", "4", seq)
+  seq <- gsub("n", "5", seq)
+  seq <- gsub("y", "6", seq)
+  seq <- gsub("r", "7", seq)
+  seq <- strsplit(seq, split="")
+  for (i in 1:sz) {
+    val <- as.numeric(seq[[1]][i])
+    if (val <= 4) {
+      ratio[val] <- ratio[val] + 1
+    }
+  }
+  ratio <- (1 / 100) * trunc((10000 / sz) * ratio)
+  return(ratio)
+}
+
+gcRatio <- function(seq) {
+  sz <- sequenceLength(seq)
+  ratio <- numeric(2)
+  seq <- gsub("c", "1", seq)
+  seq <- gsub("g", "2", seq)
+  seq <- gsub("a", "3", seq)
+  seq <- gsub("t", "4", seq)
+  seq <- gsub("n", "5", seq)
+  seq <- gsub("y", "6", seq)
+  seq <- gsub("r", "7", seq)
+  seq <- strsplit(seq, split="")
+  for (i in 1:sz) {
+    val <- as.numeric(seq[[1]][i])
+    if (val <= 2) {
+      ratio[val] <- ratio[val] + 1
+    }
+  }
+  ratio <- (1 / 100) * trunc((10000 / sz) * ratio)
+  gc <- ratio[1] + ratio[2]
+  return(gc)
+}
+
+inverseSequence <- function(seq) {
+  sz <- sequenceLength(seq)
+  inv <- character()
+  seq <- strsplit(seq, split="")
+  for (i in 1:sz) {
+   inv <- paste(seq[[1]][i], inv, sep="")
+  }
+  return(inv)
+}
+
+# Importación de secuencias
+library(seqinr)
+
+raw_b       <- read.fasta("data/B.fasta")
+raw_b1526   <- read.fasta("data/B.1.526.fasta")
+raw_b15261  <- read.fasta("data/B.1.526.1.fasta")
+raw_b1525   <- read.fasta("data/B.1.525.fasta")
+raw_p2      <- read.fasta("data/P.2.fasta")
+raw_b117    <- read.fasta("data/B.1.1.7.fasta")
+raw_p1      <- read.fasta("data/P.1.fasta")
+raw_b1351   <- read.fasta("data/B.1.351.fasta")
+raw_b1427   <- read.fasta("data/B.1.427.fasta")
+raw_b1429   <- read.fasta("data/B.1.429.fasta")
+
+b       <- paste(raw_b     [[1]][1:length(raw_b     [[1]])], collapse="")
+b1526   <- paste(raw_b1526 [[1]][1:length(raw_b1526 [[1]])], collapse="")
+b15261  <- paste(raw_b15261[[1]][1:length(raw_b15261[[1]])], collapse="")
+b1525   <- paste(raw_b1525 [[1]][1:length(raw_b1525 [[1]])], collapse="")
+p2      <- paste(raw_p2    [[1]][1:length(raw_p2    [[1]])], collapse="")
+b117    <- paste(raw_b117  [[1]][1:length(raw_b117  [[1]])], collapse="")
+p1      <- paste(raw_p1    [[1]][1:length(raw_p1    [[1]])], collapse="")
+b1351   <- paste(raw_b1351 [[1]][1:length(raw_b1351 [[1]])], collapse="")
+b1427   <- paste(raw_b1427 [[1]][1:length(raw_b1427 [[1]])], collapse="")
+b1429   <- paste(raw_b1429 [[1]][1:length(raw_b1429 [[1]])], collapse="")
+
+varSeq  <- c(b, b1526, b15261, b1525, p2, b117, p1, b1351, b1427, b1429)
+varNam  <- c("B", "B.1.526", "B.1.526.1", "B.1.525", "P.2", "B.1.1.7", "P.1", "B.1.351", "B.1.427", "B.1.429")
+
+# Longitud de secuencias
+varLen  <- numeric(10)
+for (i in 1:10) {
+  varLen[i] <- sequenceLength(varSeq[i])
+}
+
+# Proporción de nucleótidos
+varRat  <- list(10)
+for (i in 1:10) {
+  varRat[[i]] <- baseRatio(varSeq[i])
+}
+
+# %GC
+varGcp  <- numeric(10)
+for (i in 1:10) {
+  varGcp[i] <- gcRatio(varSeq[i])
+}
+
+# Secuencias contrasentido
+varInv  <- character(10)
+for (i in 1:10) {
+  varInv[i] <- inverseSequence(varSeq[i])
+}
+```
+
+1. Secuencias de las variantes de SARS-CoV-2.
+
+```{r, echo=FALSE}
+# Display
+for (i in 1:10) {
+  print(varNam[i])
+  print(paste(substr(varSeq[i], 1, 30), " ... ", substr(varSeq[i], varLen[i]-30, varLen[i]), sep=""))
+}
+```
+
+2. Longitud de las secuencias de cada variante.
+
+```{r, echo=FALSE}
+varLenDf  <- data.frame(varNam, varLen)
+colnames(varLenDf) <- c("Variante", "Longitud")
+print(varLenDf)
+```
+
+3. Bases de ADN que componen a cada una de las variantes del virus.
+
+```{r, echo=FALSE}
+par(mar=c(2, 2, 2, 0), mfrow=c(2, 5))
+for (i in 1:10) {
+  barplot(varRat[[i]], main=varNam[i], names.arg=c("C", "G", "A", "T"), ylim=c(0, 35))
+}
+```
+
+4. %GC de cada variante.
+
+```{r, echo=FALSE}
+varGcpDf  <- data.frame(varNam, varGcp)
+colnames(varGcpDf) <- c("Variante", "%GC")
+print(varGcpDf)
+```
+
+5. Secuencias contrasentido de cada variante.
+
+```{r, echo=FALSE}
+for (i in 1:10) {
+  print(varNam[i])
+  print(paste(substr(varInv[i], 1, 30), " ... ", substr(varInv[i], varLen[i]-30, varLen[i]), sep=""))
+}
+```
+
+6. Interpretación.
+
+Las secuencias de nucleótidos de las distintas variantes de SARS-CoV-2 tienen longitudes que rondan entre los 29 777 y 29 906 caracteres, siendo las más largas aquellas que terminan en secuencias de adeninas o nucleótidos sin identificar. Las gráficas muestran que la composición nucleotídica es casi la misma en todas las variantes, debido a que las mutaciones que dan origen a estas son mínimas, sin embargo, significantes para volver al virus más peligroso. Un ejemplo de esto es la variante sudafricana que presenta 8 mutaciones que afectan el *spike* e incrementan su tasa de transmisión en un 50% (CDC, 2021). Finalmente, dado que la composición nucleotídica es casi idéntica, también lo es el %GC, que ronda entre 37.14% y 37.96% (exceptuando la variante B.1.1.7 con 35.51%), lo que significa que su estructura no es muy estable y la hace fácil de desnaturalizar para su análisis. Esto, junto con la experiencia con el SARS-CoV en 2002, fue un factor crucial para el desarrollo tan veloz de las vacunas que se encuentran en uso ahora (Solis-Moreira, 2020).
+
+# Bibliografía
+
+Buchanan, D.R. & Miller, F.G. (2006). A public health perspective on research ethics. *J Med Ethics, 32*(12), 729–733. doi: 10.1136/jme.2006.015891
+
+Centros para el Contros y la Prevención de Enfermedades [CDC]. (2021). *SARS-CoV-2 Variant Classifications and Definitions*. https://www.cdc.gov/coronavirus/2019-ncov/cases-updates/variant-surveillance/variant-info.html
+
+Charif, D. & Lobry, J.R. (2007). SeqinR 1.0-2: a contributed package to the R project for statistical computing devoted to biological sequences retrieval and analysis. En Bastolla U. et al. (, Eds.). *Structural approaches to sequence evolution: Molecules, networks, populations* (pp. 207-232). Springer Verlag. ISBN : 978-3-540-35305-8.
+
+Consortium, C. (2021). *Severe acute respiratory syndrome coronavirus 2 isolate SARS-CoV-2/human/USA/CA-CZB-28732/2021, complete genome*. https://www.ncbi.nlm.nih.gov/nuccore/MW921871
+
+Constantinides, B. & Constantinides, B. (2021a). *Severe acute respiratory syndrome coronavirus 2 isolate a1245 genome assembly, complete genome: monopartite*. https://www.ncbi.nlm.nih.gov/nuccore/HG999939
+
+Constantinides, B. & Constantinides, B. (2021b). *Severe acute respiratory syndrome coronavirus 2 isolate a1289 genome assembly, complete genome: monopartite*. https://www.ncbi.nlm.nih.gov/nuccore/FR988030
+
+El Economista. (2021). *Avance diario de aplicación de la vacuna contra el Covid-19 en México al 18 de abril*. https://www.eleconomista.com.mx/politica/Avance-diario-de-aplicacion-de-la-vacuna-contra-el-Covid-19-en-Mexico-al-18-de-abril-20210419-0152.html
+
+Gobierno de México. (2021). *Vacunación COVID*. https://coronavirus.gob.mx/vacunacion-covid/
+
+Howard, D. & al. (2021a). *Severe acute respiratory syndrome coronavirus 2 isolate SARS-CoV-2/human/USA/CA-CDC-STM-000039934/2021, complete genome*. https://www.ncbi.nlm.nih.gov/nuccore/MW890977
+
+Howard, D. & al. (2021b). *Severe acute respiratory syndrome coronavirus 2 isolate SARS-CoV-2/human/USA/NJ-CDC-ASC210014025/2021, complete genome*. https://www.ncbi.nlm.nih.gov/nuccore/MW965886
+
+Howard, D. & al. (2021c). *Severe acute respiratory syndrome coronavirus 2 isolate SARS-CoV-2/human/USA/PA-CDC-ASC210006460/2021, complete genome*. https://www.ncbi.nlm.nih.gov/nuccore/MW966398
+
+Keller, E. & al. (2021). *Severe acute respiratory syndrome coronavirus 2 isolate SARS-CoV-2/human/USA/MD-MDH-1384/2021, complete genome*. https://www.ncbi.nlm.nih.gov/nuccore/MW809054
+
+Lemieux, J.E. & al. (2021). *Severe acute respiratory syndrome coronavirus 2 isolate SARS-CoV-2/human/USA/MA-CDCBI-CRSP_01871/2021, complete genome*. https://www.ncbi.nlm.nih.gov/nuccore/MW892185
+
+Organización Mundial de la Salud [OMS]. (2020a). *Coronavirus disease (COVID-19) pandemic*. https://www.euro.who.int/en/health-topics/health-emergencies/coronavirus-covid-19/novel-coronavirus-2019-ncov
+
+Organización Mundial de la Salud [OMS]. (2020b). *WHO Director-General's opening remarks at the media brieding on COVID-19 - 11 March 2020*. https://www.who.int/director-general/speeches/detail/who-director-general-s-opening-remarks-at-the-media-briefing-on-covid-19---11-march-2020
+
+PANGO lineages. (2021). *PANGO lineages*. https://cov-lineages.org/pango_lineages.html
+
+Sadri, N. & al. (2021). *Severe acute respiratory syndrome coronavirus 2 isolate SARS-CoV-2/human/USA/OH-UHTL-456/2021, complete genome*. https://www.ncbi.nlm.nih.gov/nuccore/MW930756
+
+Solis-Moreira, J. (2020). *How did we develop a COVID-19 vaccine so quickly?* https://www.medicalnewstoday.com/articles/how-did-we-develop-a-covid-19-vaccine-so-quickly
+
+Universidad Johns Hopkins. (2021). *COVID-19 Dashboard by the Center for Systems Science and Engineering (CSSE) at Johns Hopkins University*. https://coronavirus.jhu.edu/map.html
+
+Wu, F. & al. (2020). *Severe acute respiratory syndrome coronavirus 2 isolate Wuhan-Hu-1, complete genome*. https://www.ncbi.nlm.nih.gov/nuccore/NC_045512
