@@ -332,3 +332,54 @@ Datos + Estética + Capas + Facetas()
         dataframe$variable %>% table %>% barplot
         
         library(stringr) // string manipulation
+
+## Alineación
+
+### Genómica comparada
+
+Estudio de relación entre estructura y función de genoma
+- A partir de similitudes y diferencias de proteínas, ARN y regiones reguladoras
+- Selección:
+    - Estabilizadora: elementos responsables de similitudes que se conservan en el tiempo
+    - Positiva: elementos responsables de diferencias entre especies que diviergen
+    - Neutral: elementos que no son importantes para el éxito evolutivo
+
+Relaciones entre genes
+- Analogía: misma función, diferente origen
+- Homología: genes similares de ancestro común, misma o diferente función
+- Genes ortólogos: mismos genes en distintas especies
+- Genes parálogos: derivados de una duplicación en un organismo, misma o diferente función
+- Conversión génica: sustitución de segmento de ADN de un gen con segmento homólogo de su parálogo
+
+¿Para qué sirve la alineación?
+- Descubir genes homólogos
+- Encontrar patrones de conservación
+- Construir taxonomías (estudios filogenéticos)
+- Estudios poblacionales (SNIPs)
+- Diseño de cebadores (primers)
+    - identificar regiones específicas mediante amplificación (e.g. prueba PCR)
+- Identificar proteínas similares: predecir funciones y estructura
+- Identificar genes y función
+- Identificar secuencias repetidas en tandem
+    - área forense, pruebas de paternidad
+- Identificar regiones funcionales: origen de replicación, sitio de unión al ribosoma, etc.
+- Identificar mutaciones (enfermedadres)
+    - tomar decisiones sobre alimentación, cuidados corporales y operaciones quirúrjicas
+- Localizar secciones de ADN solapadas: ensamblaje
+    - secuenciación, ensamblar secuencias parciales
+
+Comparación de secuencias
+1. Se colocan 2 de manera paralela
+2. Se genera una función de puntuación a maximizar (match, mismatch, gap penalty)
+
+Alineamiento:
+- Global: tomar cadenas de longitud similar y comparar (e.g. comparar SARS-CoV y SARS-CoV-2)
+- Local: tomar partes y comprarar (e.g. comparar SARS-CoV-2 e influenza)
+
+Métodos:
+- A mano
+- Bioinformática:
+    - Análisis de Dot Plot
+    - Algorítmos de Programación Dinámica
+    - Heurísticas (BLAST): identifica homólogos y regiones de semejanza (alineamiento local)
+        - BLAST NCBI
