@@ -306,7 +306,29 @@ Otros más graves:
 - SARS-CoV
 - SARS-CoV 2 *(covid-19)*
 
-### Plotting in R
+#### April 20
+
+## Plotting in R
 
     par(mar = c(1,1,1,1)) // to set margins
     par(mfrow = c(2,2)) // plot grid dimensions
+    
+    str(dataframe) // string summary
+    hist(dataframe$variable) // histogram
+    with(dataframe, plot(var1, var2)) // another way of plotting
+    
+    var <- read.csv("file.csv", header=TRUE; stringAsFactors=FALSE)
+    head(diseases) // displays first 6 entries
+    tail(diseases) // displays last 6 entries
+    
+    table(dataframe$variable) // counts occurrence of each entry (histogram with discrete/qualitative data types)
+    
+### ```ggplot```
+
+Datos + Estética + Capas + Facetas()
+
+        library(dplyr)
+        barplot(table(dataframe$variable))
+        dataframe$variable %>% table %>% barplot
+        
+        library(stringr) // string manipulation
