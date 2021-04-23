@@ -1,0 +1,240 @@
+--------------------
+Title         : introduccionr_A01706892
+Project       : BT1013
+Description   : Resolver ejercicios básicos de R orientados a bioinformática.
+Author        : Ian García, Said Ortigoza, Alejandro Rodriguez
+Created on    : 09/04/21
+Copyright (c) 2021
+--------------------
+
+1.	Escribe una función que genere una secuencia aleatoria de DNA de tamaño “n”.
+```{r}
+generateDNA <- function(n) {
+  if (n < 9) return(NULL)
+  if (n %% 3 != 0) return(NULL)
+  startCodon <- c('T', 'A', 'C')
+  stopCodons <- list(c('A', 'C', 'T'), c('A', 'T', 'C'), c('A', 'T', 'T'))
+  bases <- c('A', 'T', 'G', 'C')
+  dna <- paste(append(append(paste(startCodon, collapse = " "), paste(sample(bases, n - 6, TRUE), collapse = " ")), paste(sample(stopCodons, 1, FALSE)[[1]], collapse = " ")), collapse = " ")
+  return(gsub(" ", "", dna))
+}
+```
+2.	Codifica una función que calcula el tamaño de una secuencia de DNA.
+```{r}
+sizeDNA <- function(seq) {
+  return(nchar(seq, type = "chars"))
+}
+```
+3.	Crea una función que recibe una secuencia de DNA e imprime el porcentaje de cada base en la secuencia.
+```{r}
+baseRatio <- function(seq) {
+  sz <- sizeDNA(seq)
+  ratio <- numeric(4)
+  seq <- gsub("C", "1", seq)
+  seq <- gsub("G", "2", seq)
+  seq <- gsub("A", "3", seq)
+  seq <- gsub("T", "4", seq)
+  seq <- strsplit(seq, split = "")
+  for (i in 1:sz) {
+    ratio[as.numeric(seq[[1]][i])] <- ratio[as.numeric(seq[[1]][i])] + 1
+  }
+  ratio <- (1 / 100) * trunc((10000 / sz) * ratio)
+  print("Porcentaje de bases")
+  print(paste0("C = ", ratio[1], "%"))
+  print(paste0("G = ", ratio[2], "%"))
+  print(paste0("A = ", ratio[3], "%"))
+  print(paste0("T = ", ratio[4], "%"))
+}
+```
+4.	Programa una función que transcribe DNA a RNA.
+```{r}
+DNAtoRNA <- function(seq) {
+  sz <- sizeDNA(seq)
+  rna <- vector(mode = "character")
+  for (base in strsplit(seq, "")) {
+    for (i in 1:sz) {
+      if (base[i] == "A") {
+        rna <- append(rna, "U")
+      } else if (base[i] == "C") {
+        rna <- append(rna, "G")
+      } else if (base[i] == "T") {
+        rna <- append(rna, "A")
+      } else {
+        rna <- append(rna, "C")
+      }
+    }
+  }
+  return(gsub(" ", "", paste0(rna, collapse = " ")))
+}
+```
+5.	Crea una función que traduce una secuencia de RNA a una secuencia de proteínas.
+```{r}
+translateRNA <- function(rna) {
+  translated <- vector(mode = "character")
+  triplets <- sapply(seq(from = 1, to = sizeDNA(rna), by = 3), function(i) substr(rna, i, i + 2))
+  for (i in seq_along(triplets)) {
+    triplet <- strsplit(triplets[i], "")[[1]]
+    if (triplet[1] == "U") {
+      if (triplet[2] == "U") {
+        if (triplet[3] == "U" || triplet[3] == "C") {
+          translated <- append(translated, "Phe")
+        } else if (triplet[3] == "A" || triplet[3] == "G") {
+          translated <- append(translated, "Leu")
+        }
+      } else if (triplet[2] == "C") {
+        if (triplet[3] == "U" ||
+          triplet[3] == "C" ||
+          triplet[3] == "A" ||
+          triplet[3] == "G") {
+          translated <- append(translated, "Ser")
+        }
+      } else if (triplet[2] == "A") {
+        if (triplet[3] == "U" || triplet[3] == "C") {
+          translated <- append(translated, "Tyr")
+        }
+      } else {
+        if (triplet[3] == "U" || triplet[3] == "C") {
+          translated <- append(translated, "Cys")
+        } else if (triplet[3] == "G") {
+          translated <- append(translated, "Trp")
+        }
+      }
+    } else if (triplet[1] == "C") {
+      if (triplet[2] == "U") {
+        if (triplet[3] == "U" ||
+          triplet[3] == "C" ||
+          triplet[3] == "A" ||
+          triplet[3] == "G") {
+          translated <- append(translated, "Leu")
+        }
+      } else if (triplet[2] == "C") {
+        if (triplet[3] == "U" ||
+          triplet[3] == "C" ||
+          triplet[3] == "A" ||
+          triplet[3] == "G") {
+          translated <- append(translated, "Pro")
+        }
+      } else if (triplet[2] == "A") {
+        if (triplet[3] == "U" || triplet[3] == "C") {
+          translated <- append(translated, "His")
+        } else if (triplet[3] == "A" || triplet[3] == "G") {
+          translated <- append(translated, "Gln")
+        }
+      } else {
+        if (triplet[3] == "U" ||
+          triplet[3] == "C" ||
+          triplet[3] == "A" ||
+          triplet[3] == "G") {
+          translated <- append(translated, "Arg")
+        }
+      }
+    } else if (triplet[1] == "A") {
+      if (triplet[2] == "U") {
+        if (triplet[3] == "U" ||
+          triplet[3] == "C" ||
+          triplet[3] == "A") {
+          translated <- append(translated, "Ile")
+        } else {
+          translated <- append(translated, "Met")
+        }
+      } else if (triplet[2] == "C") {
+        if (triplet[3] == "U" ||
+          triplet[3] == "C" ||
+          triplet[3] == "A" ||
+          triplet[3] == "G") {
+          translated <- append(translated, "Thr")
+        }
+      } else if (triplet[2] == "A") {
+        if (triplet[3] == "U" || triplet[3] == "C") {
+          translated <- append(translated, "Asn")
+        } else if (triplet[3] == "A" || triplet[3] == "G") {
+          translated <- append(translated, "Lys")
+        }
+      } else {
+        if (triplet[3] == "U" || triplet[3] == "C") {
+          translated <- append(translated, "Ser")
+        } else if (triplet[3] == "A" || triplet[3] == "G") {
+          translated <- append(translated, "Arg")
+        }
+      }
+    } else {
+      if (triplet[2] == "U") {
+        if (triplet[3] == "U" ||
+          triplet[3] == "C" ||
+          triplet[3] == "A" ||
+          triplet[3] == "G") {
+          translated <- append(translated, "Val")
+        }
+      } else if (triplet[2] == "C") {
+        if (triplet[3] == "U" ||
+          triplet[3] == "C" ||
+          triplet[3] == "A" ||
+          triplet[3] == "G") {
+          translated <- append(translated, "Ala")
+        }
+      } else if (triplet[2] == "A") {
+        if (triplet[3] == "U" || triplet[3] == "C") {
+          translated <- append(translated, "Asp")
+        } else if (triplet[3] == "A" || triplet[3] == "G") {
+          translated <- append(translated, "Glu")
+        }
+      } else {
+        if (triplet[3] == "U" ||
+          triplet[3] == "C" ||
+          triplet[3] == "A" ||
+          triplet[3] == "G") {
+          translated <- append(translated, "Gly")
+        }
+      }
+    }
+  }
+  return(gsub(" ", "", paste0(translated)))
+}
+```
+6.	Escribe una función que recibe una hebra directa y regresa la hebra inversa.
+```{r}
+reverseDNA <- function(seq) {
+  sz <- sizeDNA(seq)
+  reversedSeq <- vector(mode = "character")
+  for (base in strsplit(seq, "")) {
+    for (i in sz:1) {
+      reversedSeq <- append(reversedSeq, base[i])
+    }
+  }
+  return(gsub(" ", "", paste0(reversedSeq, collapse = " ")))
+}
+```
+7.	Escribe una función qué recibe una hebra directa y obtiene la hebra complementaria.
+```{r}
+getComplementary <- function(seq) {
+  sz <- sizeDNA(seq)
+  complementary <- vector(mode = "character")
+  for (base in strsplit(seq, "")) {
+    for (i in 1:sz) {
+      if (base[i] == "T") {
+        complementary <- append(complementary, "A")
+      } else if (base[i] == "G") {
+        complementary <- append(complementary, "C")
+      } else if (base[i] == "C") {
+        complementary <- append(complementary, "G")
+      } else {
+        complementary <- append(complementary, "T")
+      }
+    }
+  }
+  return(gsub(" ", "", paste0(complementary, collapse = " ")))
+}
+```
+8.	Escribe la función en R para obtener la hebra complementaria inversa, desde una hebra complementaria.
+```{r}
+getInverseComplementary <- function(seq) {
+  sz <- sizeDNA(seq)
+  reversedSeq <- vector(mode = "character")
+  for (base in strsplit(seq, "")) {
+    for (i in sz:1) {
+      reversedSeq <- append(reversedSeq, base[i])
+    }
+  }
+  return(gsub(" ", "", paste0(reversedSeq, collapse = " ")))
+}
+```
