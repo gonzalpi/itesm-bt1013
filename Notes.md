@@ -383,3 +383,29 @@ Métodos:
     - Algorítmos de Programación Dinámica
     - Heurísticas (BLAST): identifica homólogos y regiones de semejanza (alineamiento local)
         - BLAST NCBI
+
+#### April 27
+
+## Árboles filogenéticos
+
+    install.packages("ape")
+    install.packages("phangorn")
+    install.packages("phytools")
+    install.packages("geiger")
+
+    library(Biostrings)
+    library(seqinr)
+    library(adegenet)
+    library(ape)
+    library(ggtree)
+    library(DECIPHER)
+    library(viridis)
+    library(ggplot2)
+
+Los elementos de acomodan de abajo hacia arriba.
+
+    vert.tree("(cow,(pig,tree));")
+
+Endograma: muestra relaciones
+
+Árbol filogenético (tb. análisis jerárquico global): muestra grados de relación (distancias proporcionales)
