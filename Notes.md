@@ -388,11 +388,14 @@ Métodos:
 
 ## Árboles filogenéticos
 
-    install.packages("ape")
-    install.packages("phangorn")
-    install.packages("phytools")
-    install.packages("geiger")
 
+Libraries:
+
+    library(ape)
+    library(phangorn)
+    library(phytools)
+    library(geiger)
+    library(ggmsa)
     library(Biostrings)
     library(seqinr)
     library(adegenet)
@@ -405,6 +408,12 @@ Métodos:
 Los elementos de acomodan de abajo hacia arriba.
 
     vert.tree("(cow,(pig,tree));")
+    
+    #    .-- tree
+    # .--|
+    # |  '-- pig
+    # |
+    # '----- cow
 
 Endograma: muestra relaciones
 
